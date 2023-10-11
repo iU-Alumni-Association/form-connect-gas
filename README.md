@@ -32,13 +32,44 @@
 ## 画像イメージ
 
 #### Slack通知イメージ
-<img width="480" alt="image-slack-notification" src="">
+<img width="462" alt="image-slack-form" src="https://github.com/iU-Alumni-Association/form-connect-gas/assets/147612244/d5d67017-a613-496a-bc24-7dc486de2f56">
 
 
 ## コードの概要
 
-### Google Apps Script
+### Backend (Google Apps Script)
 
-- **onFormSubmit(event)**: Google Formからの回答をトリガーとして、処理を開始する関数です。回答の内容に基づいて、Slackのメッセージを組み立て、通知します。
+#### Google Form Slack通知関数
 
-このスクリプトは、Google Formからの回答をリアルタイムで受け取り、その内容に基づいてSlackに通知するためのものです。特定の回答データ（例: 日付と時間）に基づいて、Googleカレンダーの予定の作成もサポートします。
+この関数は、Google Formからの回答を受け取り、Slackにメッセージを送信します。また、特定の処理を適用してメッセージを組み立てる機能も持っています。回答に基づいてカレンダーの予定を自動的に作成し、フォームのリンクも生成します。組み立てたメッセージはSlackのWebhook URLを通じてSlackに送信されます。
+
+**主な変数の説明:**
+- **form**: 回答があったGoogleフォームのオブジェクト。
+
+- **formTitle**: Googleフォームのタイトル。
+
+- **formUrl**: Googleフォームの公開URL。
+  
+- **respondentEmail**: 回答者のメールアドレス。
+  
+- **itemResponses**: すべての回答内容を含む配列。
+  
+- **message**: Slackに送信するメッセージの内容。
+  
+- **dateValue**: 日付形式の回答（存在する場合）。
+  
+- **timeValue**: 時間形式の回答（存在する場合）。
+  
+- **nameValue**: "名"というタイトルを持つ質問の回答または投稿者のメールアドレス。
+
+**主な機能・処理の流れ:**
+1. Google Formからの回答を取得。
+2. Slackへの通知メッセージを組み立て。
+   - フォームのタイトル、回答者のメールアドレスなどを含める。
+   - それぞれの回答に適切な絵文字を挿入。
+   - 回答に応じてGoogleカレンダーの予定を自動作成。
+3. 組み立てたメッセージをSlackのWebhook URLを通じてSlackに送信。
+
+この関数は、Google Formの回答をリアルタイムで受け取り、その内容をSlackに通知するためのものです。特定の回答データ（例: 日付と時間）を基づいて、Googleカレンダーの予定作成もサポートします。
+
+
