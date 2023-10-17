@@ -60,6 +60,10 @@ function onFormSubmit(event) {
         if (Array.isArray(response)) { 
             let fileLinks = [];
             for (let fileId of response) {
+                // fileIdが空白の場合はスキップ
+                if (!fileId) {
+                    continue;
+                }
                 const file = DriveApp.getFileById(fileId);
                 const fileName = file.getName();
                 const fileUrl = `https://drive.google.com/file/d/${fileId}/view`;
@@ -67,6 +71,10 @@ function onFormSubmit(event) {
             }
             response = fileLinks.join(', ');
         } else if (/^[a-zA-Z0-9-_]{33}$/.test(response)) { 
+            // responseが空白の場合はスキップ
+            if (!response) {
+                continue;
+            }
             const file = DriveApp.getFileById(response);
             const fileName = file.getName();
             const fileUrl = `https://drive.google.com/file/d/${response}/view`;
